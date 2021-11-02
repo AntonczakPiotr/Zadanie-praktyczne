@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Zadanie_praktyczne.Models;
 
 namespace Zadanie_praktyczne.Controllers
 {
@@ -13,18 +15,25 @@ namespace Zadanie_praktyczne.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Form()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Formularz.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Form(Person person)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                return View("Details", person);
+            }
+            else
+            {
+                return View("DetailsError", person);
+            }
         }
     }
 }
